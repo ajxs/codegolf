@@ -1,12 +1,17 @@
 #include <stdio.h>
-
+#include <unistd.h>
 int main() {
-	int x, l, i, a[6] = {12,240,1984,6336,24672,32799};
+	int x = 0, l, i, a[6] = {12,240,1984,6336,24672,32799};
+	while(1) {
+		x++;
+		printf("\e[1;1H\e[2J");
 		for(l=0; l<6; l++) {
 			i=128;
-			while(i--) printf("%c", a[l]&(1<<(i%16)) ? '*' : ' ');
+			while(i--) printf("%c", a[l]&(1<<((i+x)%16)) ? '*' : ' ');
 			printf("\n");
 		}
+		sleep(2);
+	}
 };
 
 /*
