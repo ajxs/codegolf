@@ -1,6 +1,1 @@
-let defuse=(w,o,c=x=>w.filter(i=>i==x).length,q="lastIndexOf",r=c('R'),y=c('Y'),u=c('U'))=>[,,,
-	()=>!r?2:w[2]=='W'?3:u>1?w[q]('U')+1:3,
-	()=>r>1&&o?w[q]('R')+1:w[3]=='Y'&&!r?1:u==1?1:y>1?4:2,
-	()=>w[4]=='B'&&o?4:r==1&&y>1?1:!c('B')?2:1,
-	()=>!y&&o?3:y==1&&c('W')>1?4:!r?6:4
-][w.length]();
+d=(a,o,[b,u,r,y,w]=[..."BURYW"].map(i=>a.filter(t=>t==i).length),q="lastIndexOf")=>[!r?2:a[2]=='W'?3:u>1?a[q]('U')+1:3,r>1&&o?a[q]('R')+1:a[3]=='Y'&&!r?1:u==1?1:y>1?4:2,a[4]=='B'&&o?4:r==1&&y>1?1:!b?2:1,!y&&o?3:y==1&&w>1?4:!r?6:4][a.length-3];
