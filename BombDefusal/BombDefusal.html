@@ -3,405 +3,397 @@
 <script src="BombDefusal.js"></script>
 <script>
 
-	let assert = (v, r) => {
-		console.log(`${v == r}`);
-		return v==r;
-	};
+	let assert = (v, r) => v==r;
 
 	window.onload = function() {
+		let testCases = [
+		assert(d(['B', 'B', 'B'], false), 2),
+		assert(d(['B', 'B', 'Y'], true), 2),
+		assert(d(['B', 'R', 'R'], false), 3),
+		assert(d(['B', 'W', 'U'], true), 2),
+		assert(d(['U', 'B', 'B'], true), 2),
+		assert(d(['U', 'B', 'Y'], false), 2),
+		assert(d(['U', 'U', 'R'], true), 2),
+		assert(d(['U', 'U', 'U'], false), 2),
+		assert(d(['U', 'R', 'R'], true), 3),
+		assert(d(['U', 'Y', 'Y'], false), 2),
+		assert(d(['R', 'B', 'U'], false), 3),
+		assert(d(['R', 'B', 'Y'], false), 3),
+		assert(d(['R', 'U', 'B'], false), 3),
+		assert(d(['R', 'R', 'U'], false), 3),
+		assert(d(['R', 'W', 'U'], true), 3),
+		assert(d(['W', 'B', 'W'], false), 2),
+		assert(d(['W', 'B', 'Y'], true), 2),
+		assert(d(['W', 'R', 'U'], true), 3),
+		assert(d(['W', 'W', 'B'], true), 2),
+		assert(d(['W', 'W', 'U'], true), 2),
+		assert(d(['W', 'Y', 'W'], true), 2),
+		assert(d(['Y', 'U', 'B'], true), 2),
+		assert(d(['Y', 'U', 'W'], false), 2),
+		assert(d(['Y', 'R', 'U'], false), 3),
+		assert(d(['Y', 'Y', 'B'], false), 2),
+		assert(d(['Y', 'Y', 'B'], true), 2),
 
-		console.log("3\n\n");
+		assert(d(['B', 'B', 'U', 'U'], true), 2),
+		assert(d(['B', 'B', 'R', 'W'], true), 2),
+		assert(d(['B', 'B', 'R', 'Y'], true), 2),
+		assert(d(['B', 'U', 'B', 'R'], false), 1),
+		assert(d(['B', 'U', 'R', 'W'], false), 1),
+		assert(d(['B', 'U', 'W', 'R'], true), 1),
+		assert(d(['B', 'U', 'W', 'Y'], true), 1),
+		assert(d(['B', 'U', 'Y', 'R'], false), 1),
+		assert(d(['B', 'R', 'U', 'B'], true), 1),
+		assert(d(['B', 'R', 'R', 'B'], true), 3),
+		assert(d(['B', 'R', 'Y', 'W'], true), 2),
+		assert(d(['B', 'R', 'Y', 'Y'], true), 4),
+		assert(d(['B', 'W', 'R', 'U'], true), 1),
+		assert(d(['B', 'W', 'Y', 'B'], false), 2),
+		assert(d(['B', 'Y', 'R', 'U'], false), 1),
+		assert(d(['B', 'Y', 'R', 'R'], false), 2),
+		assert(d(['U', 'B', 'R', 'W'], false), 1),
+		assert(d(['U', 'B', 'W', 'Y'], false), 1),
+		assert(d(['U', 'B', 'Y', 'W'], true), 1),
+		assert(d(['U', 'U', 'R', 'W'], true), 2),
+		assert(d(['U', 'U', 'W', 'B'], false), 2),
+		assert(d(['U', 'U', 'W', 'Y'], false), 1),
+		assert(d(['U', 'R', 'B', 'U'], false), 2),
+		assert(d(['U', 'R', 'Y', 'U'], true), 2),
+		assert(d(['U', 'R', 'Y', 'W'], false), 1),
+		assert(d(['U', 'R', 'Y', 'Y'], false), 1),
+		assert(d(['U', 'W', 'U', 'Y'], false), 1),
+		assert(d(['U', 'W', 'W', 'W'], false), 1),
+		assert(d(['U', 'Y', 'B', 'B'], false), 1),
+		assert(d(['U', 'Y', 'B', 'W'], true), 1),
+		assert(d(['U', 'Y', 'U', 'R'], true), 2),
+		assert(d(['U', 'Y', 'R', 'W'], false), 1),
+		assert(d(['R', 'B', 'R', 'R'], false), 2),
+		assert(d(['R', 'U', 'B', 'B'], true), 1),
+		assert(d(['R', 'U', 'W', 'B'], false), 1),
+		assert(d(['R', 'R', 'B', 'R'], true), 4),
+		assert(d(['R', 'R', 'W', 'R'], true), 4),
+		assert(d(['R', 'R', 'W', 'W'], true), 2),
+		assert(d(['R', 'R', 'Y', 'Y'], false), 4),
+		assert(d(['R', 'R', 'Y', 'Y'], true), 2),
+		assert(d(['R', 'W', 'U', 'W'], true), 1),
+		assert(d(['R', 'W', 'W', 'U'], false), 1),
+		assert(d(['R', 'W', 'Y', 'W'], false), 2),
+		assert(d(['R', 'Y', 'R', 'U'], false), 1),
+		assert(d(['R', 'Y', 'Y', 'W'], false), 4),
+		assert(d(['W', 'B', 'U', 'R'], false), 1),
+		assert(d(['W', 'B', 'U', 'Y'], false), 1),
+		assert(d(['W', 'U', 'B', 'Y'], false), 1),
+		assert(d(['W', 'U', 'U', 'W'], true), 2),
+		assert(d(['W', 'U', 'R', 'W'], false), 1),
+		assert(d(['W', 'W', 'R', 'U'], false), 1),
+		assert(d(['W', 'Y', 'R', 'R'], false), 2),
+		assert(d(['W', 'Y', 'Y', 'U'], false), 1),
+		assert(d(['W', 'Y', 'Y', 'Y'], true), 1),
+		assert(d(['Y', 'B', 'B', 'R'], true), 2),
+		assert(d(['Y', 'B', 'W', 'U'], false), 1),
+		assert(d(['Y', 'B', 'W', 'W'], false), 2),
+		assert(d(['Y', 'U', 'R', 'Y'], false), 1),
+		assert(d(['Y', 'R', 'B', 'R'], false), 2),
+		assert(d(['Y', 'R', 'U', 'R'], true), 4),
+		assert(d(['Y', 'R', 'R', 'Y'], false), 4),
+		assert(d(['Y', 'R', 'W', 'U'], false), 1),
+		assert(d(['Y', 'R', 'Y', 'B'], false), 4),
+		assert(d(['Y', 'R', 'Y', 'B'], true), 4),
+		assert(d(['Y', 'W', 'U', 'B'], false), 1),
+		assert(d(['Y', 'W', 'R', 'R'], true), 4),
+		assert(d(['Y', 'W', 'W', 'R'], true), 2),
+		assert(d(['Y', 'W', 'W', 'Y'], true), 1),
+		assert(d(['Y', 'W', 'Y', 'U'], false), 1),
+		assert(d(['Y', 'Y', 'B', 'B'], true), 4),
+		assert(d(['Y', 'Y', 'R', 'R'], true), 4),
 
-		assert(d(['B', 'B', 'B'], false), 2);
-		assert(d(['B', 'B', 'Y'], true), 2);
-		assert(d(['B', 'R', 'R'], false), 3);
-		assert(d(['B', 'W', 'U'], true), 2);
-		assert(d(['U', 'B', 'B'], true), 2);
-		assert(d(['U', 'B', 'Y'], false), 2);
-		assert(d(['U', 'U', 'R'], true), 2);
-		assert(d(['U', 'U', 'U'], false), 2);
-		assert(d(['U', 'R', 'R'], true), 3);
-		assert(d(['U', 'Y', 'Y'], false), 2);
-		assert(d(['R', 'B', 'U'], false), 3);
-		assert(d(['R', 'B', 'Y'], false), 3);
-		assert(d(['R', 'U', 'B'], false), 3);
-		assert(d(['R', 'R', 'U'], false), 3);
-		assert(d(['R', 'W', 'U'], true), 3);
-		assert(d(['W', 'B', 'W'], false), 2);
-		assert(d(['W', 'B', 'Y'], true), 2);
-		assert(d(['W', 'R', 'U'], true), 3);
-		assert(d(['W', 'W', 'B'], true), 2);
-		assert(d(['W', 'W', 'U'], true), 2);
-		assert(d(['W', 'Y', 'W'], true), 2);
-		assert(d(['Y', 'U', 'B'], true), 2);
-		assert(d(['Y', 'U', 'W'], false), 2);
-		assert(d(['Y', 'R', 'U'], false), 3);
-		assert(d(['Y', 'Y', 'B'], false), 2);
-		assert(d(['Y', 'Y', 'B'], true), 2);
+		assert(d(['B', 'B', 'B', 'R', 'W'], false), 1),
+		assert(d(['B', 'B', 'R', 'R', 'W'], false), 1),
+		assert(d(['B', 'U', 'B', 'W', 'U'], true), 1),
+		assert(d(['B', 'R', 'R', 'U', 'R'], true), 1),
+		assert(d(['B', 'R', 'R', 'W', 'W'], false), 1),
+		assert(d(['B', 'R', 'Y', 'Y', 'R'], false), 1),
+		assert(d(['B', 'W', 'B', 'W', 'B'], false), 1),
+		assert(d(['B', 'W', 'U', 'B', 'U'], true), 1),
+		assert(d(['B', 'W', 'R', 'U', 'W'], true), 1),
+		assert(d(['B', 'W', 'R', 'W', 'B'], false), 1),
+		assert(d(['B', 'W', 'W', 'R', 'U'], false), 1),
+		assert(d(['B', 'W', 'W', 'R', 'U'], true), 1),
+		assert(d(['B', 'W', 'W', 'W', 'B'], false), 1),
+		assert(d(['B', 'W', 'Y', 'R', 'Y'], true), 1),
+		assert(d(['B', 'Y', 'B', 'W', 'U'], true), 1),
+		assert(d(['B', 'Y', 'U', 'W', 'B'], true), 4),
+		assert(d(['B', 'Y', 'U', 'Y', 'W'], false), 1),
+		assert(d(['U', 'B', 'R', 'W', 'Y'], false), 1),
+		assert(d(['U', 'B', 'W', 'B', 'R'], false), 1),
+		assert(d(['U', 'B', 'W', 'B', 'W'], false), 1),
+		assert(d(['U', 'B', 'W', 'Y', 'R'], false), 1),
+		assert(d(['U', 'B', 'Y', 'U', 'B'], true), 4),
+		assert(d(['U', 'B', 'Y', 'U', 'Y'], false), 1),
+		assert(d(['U', 'B', 'Y', 'R', 'W'], false), 1),
+		assert(d(['U', 'U', 'B', 'B', 'U'], true), 1),
+		assert(d(['U', 'U', 'R', 'U', 'W'], true), 2),
+		assert(d(['U', 'U', 'Y', 'U', 'R'], true), 2),
+		assert(d(['U', 'U', 'Y', 'U', 'W'], false), 2),
+		assert(d(['U', 'R', 'B', 'Y', 'Y'], false), 1),
+		assert(d(['U', 'R', 'U', 'B', 'Y'], false), 1),
+		assert(d(['U', 'R', 'W', 'W', 'B'], false), 1),
+		assert(d(['U', 'R', 'Y', 'Y', 'W'], false), 1),
+		assert(d(['U', 'W', 'B', 'U', 'B'], true), 4),
+		assert(d(['U', 'W', 'U', 'U', 'B'], true), 4),
+		assert(d(['U', 'W', 'R', 'U', 'Y'], true), 2),
+		assert(d(['U', 'W', 'R', 'R', 'R'], true), 2),
+		assert(d(['U', 'W', 'R', 'R', 'W'], false), 2),
+		assert(d(['U', 'W', 'R', 'Y', 'W'], true), 2),
+		assert(d(['U', 'W', 'W', 'Y', 'R'], true), 2),
+		assert(d(['U', 'Y', 'B', 'W', 'Y'], false), 1),
+		assert(d(['U', 'Y', 'U', 'R', 'W'], true), 2),
+		assert(d(['U', 'Y', 'R', 'R', 'U'], false), 2),
+		assert(d(['U', 'Y', 'Y', 'B', 'W'], false), 1),
+		assert(d(['U', 'Y', 'Y', 'R', 'B'], true), 4),
+		assert(d(['U', 'Y', 'Y', 'Y', 'R'], false), 1),
+		assert(d(['R', 'B', 'B', 'W', 'U'], false), 1),
+		assert(d(['R', 'B', 'U', 'B', 'Y'], false), 1),
+		assert(d(['R', 'B', 'R', 'R', 'Y'], true), 1),
+		assert(d(['R', 'B', 'W', 'W', 'R'], true), 1),
+		assert(d(['R', 'B', 'W', 'W', 'W'], false), 1),
+		assert(d(['R', 'U', 'U', 'B', 'U'], true), 1),
+		assert(d(['R', 'U', 'U', 'R', 'Y'], false), 2),
+		assert(d(['R', 'U', 'R', 'B', 'W'], false), 1),
+		assert(d(['R', 'U', 'R', 'Y', 'R'], true), 2),
+		assert(d(['R', 'R', 'B', 'U', 'U'], true), 1),
+		assert(d(['R', 'R', 'B', 'R', 'W'], true), 1),
+		assert(d(['R', 'R', 'W', 'B', 'Y'], true), 1),
+		assert(d(['R', 'R', 'Y', 'Y', 'B'], false), 1),
+		assert(d(['R', 'W', 'U', 'Y', 'W'], false), 2),
+		assert(d(['R', 'W', 'Y', 'B', 'U'], true), 1),
+		assert(d(['R', 'Y', 'B', 'U', 'U'], true), 1),
+		assert(d(['R', 'Y', 'B', 'R', 'Y'], true), 1),
+		assert(d(['R', 'Y', 'B', 'W', 'R'], true), 1),
+		assert(d(['R', 'Y', 'R', 'U', 'U'], false), 2),
+		assert(d(['R', 'Y', 'Y', 'W', 'B'], true), 4),
+		assert(d(['R', 'Y', 'Y', 'W', 'W'], true), 1),
+		assert(d(['W', 'B', 'R', 'R', 'R'], false), 1),
+		assert(d(['W', 'U', 'U', 'U', 'B'], false), 1),
+		assert(d(['W', 'U', 'U', 'R', 'B'], false), 1),
+		assert(d(['W', 'U', 'R', 'B', 'R'], false), 1),
+		assert(d(['W', 'U', 'W', 'W', 'R'], true), 2),
+		assert(d(['W', 'U', 'Y', 'R', 'W'], true), 2),
+		assert(d(['W', 'R', 'R', 'B', 'Y'], true), 1),
+		assert(d(['W', 'W', 'U', 'B', 'W'], true), 1),
+		assert(d(['W', 'W', 'U', 'W', 'R'], false), 2),
+		assert(d(['W', 'W', 'W', 'W', 'B'], false), 1),
+		assert(d(['W', 'W', 'W', 'W', 'W'], false), 2),
+		assert(d(['W', 'W', 'Y', 'W', 'U'], true), 2),
+		assert(d(['W', 'W', 'Y', 'Y', 'R'], false), 1),
+		assert(d(['W', 'Y', 'R', 'B', 'B'], false), 1),
+		assert(d(['W', 'Y', 'W', 'B', 'W'], true), 1),
+		assert(d(['W', 'Y', 'Y', 'W', 'U'], true), 2),
+		assert(d(['Y', 'B', 'U', 'R', 'B'], true), 4),
+		assert(d(['Y', 'B', 'U', 'Y', 'R'], false), 1),
+		assert(d(['Y', 'B', 'R', 'Y', 'Y'], false), 1),
+		assert(d(['Y', 'B', 'W', 'U', 'B'], true), 4),
+		assert(d(['Y', 'B', 'Y', 'R', 'R'], false), 1),
+		assert(d(['Y', 'U', 'U', 'U', 'U'], false), 2),
+		assert(d(['Y', 'U', 'R', 'W', 'B'], false), 1),
+		assert(d(['Y', 'U', 'W', 'U', 'Y'], true), 2),
+		assert(d(['Y', 'U', 'Y', 'Y', 'W'], false), 2),
+		assert(d(['Y', 'R', 'R', 'R', 'Y'], false), 2),
+		assert(d(['Y', 'R', 'R', 'Y', 'R'], false), 2),
+		assert(d(['Y', 'R', 'W', 'W', 'U'], false), 2),
+		assert(d(['Y', 'W', 'B', 'R', 'U'], true), 1),
+		assert(d(['Y', 'W', 'U', 'U', 'W'], true), 2),
+		assert(d(['Y', 'W', 'U', 'R', 'B'], false), 1),
+		assert(d(['Y', 'W', 'R', 'R', 'R'], true), 2),
+		assert(d(['Y', 'W', 'R', 'Y', 'R'], false), 2),
+		assert(d(['Y', 'W', 'W', 'B', 'U'], true), 1),
+		assert(d(['Y', 'W', 'W', 'W', 'B'], false), 1),
+		assert(d(['Y', 'Y', 'R', 'Y', 'U'], false), 1),
 
-		console.log("\n\n4\n\n");
+		assert(d(['B', 'B', 'B', 'B', 'R', 'U'], false), 4),
+		assert(d(['B', 'B', 'B', 'R', 'R', 'R'], true), 3),
+		assert(d(['B', 'B', 'R', 'U', 'W', 'Y'], false), 4),
+		assert(d(['B', 'B', 'R', 'R', 'R', 'B'], true), 3),
+		assert(d(['B', 'B', 'W', 'U', 'B', 'B'], false), 6),
+		assert(d(['B', 'B', 'W', 'U', 'B', 'U'], true), 3),
+		assert(d(['B', 'B', 'W', 'W', 'B', 'R'], true), 3),
+		assert(d(['B', 'B', 'Y', 'Y', 'W', 'R'], false), 4),
+		assert(d(['B', 'U', 'B', 'B', 'W', 'U'], false), 6),
+		assert(d(['B', 'U', 'U', 'W', 'W', 'Y'], true), 4),
+		assert(d(['B', 'U', 'U', 'Y', 'Y', 'R'], false), 4),
+		assert(d(['B', 'U', 'R', 'R', 'B', 'Y'], true), 4),
+		assert(d(['B', 'U', 'W', 'B', 'W', 'Y'], true), 4),
+		assert(d(['B', 'U', 'Y', 'R', 'R', 'R'], false), 4),
+		assert(d(['B', 'U', 'Y', 'R', 'Y', 'B'], false), 4),
+		assert(d(['B', 'R', 'U', 'B', 'U', 'B'], true), 3),
+		assert(d(['B', 'R', 'R', 'R', 'Y', 'B'], true), 4),
+		assert(d(['B', 'R', 'R', 'W', 'B', 'R'], true), 3),
+		assert(d(['B', 'R', 'Y', 'B', 'R', 'W'], false), 4),
+		assert(d(['B', 'R', 'Y', 'W', 'B', 'Y'], false), 4),
+		assert(d(['B', 'W', 'U', 'Y', 'U', 'W'], false), 4),
+		assert(d(['B', 'W', 'R', 'U', 'Y', 'Y'], true), 4),
+		assert(d(['B', 'W', 'R', 'Y', 'U', 'W'], false), 4),
+		assert(d(['B', 'W', 'W', 'Y', 'U', 'R'], false), 4),
+		assert(d(['B', 'W', 'Y', 'R', 'B', 'R'], false), 4),
+		assert(d(['B', 'W', 'Y', 'W', 'Y', 'U'], false), 6),
+		assert(d(['B', 'Y', 'B', 'R', 'B', 'R'], true), 4),
+		assert(d(['B', 'Y', 'U', 'B', 'Y', 'U'], false), 6),
+		assert(d(['B', 'Y', 'R', 'U', 'Y', 'U'], true), 4),
+		assert(d(['B', 'Y', 'R', 'R', 'W', 'W'], true), 4),
+		assert(d(['B', 'Y', 'W', 'W', 'U', 'B'], true), 4),
+		assert(d(['U', 'B', 'B', 'W', 'R', 'R'], true), 3),
+		assert(d(['U', 'B', 'W', 'B', 'W', 'U'], false), 6),
+		assert(d(['U', 'B', 'Y', 'U', 'B', 'R'], false), 4),
+		assert(d(['U', 'U', 'B', 'B', 'W', 'Y'], false), 6),
+		assert(d(['U', 'U', 'B', 'W', 'B', 'B'], true), 3),
+		assert(d(['U', 'U', 'B', 'Y', 'Y', 'Y'], false), 6),
+		assert(d(['U', 'U', 'U', 'B', 'U', 'Y'], true), 6),
+		assert(d(['U', 'U', 'U', 'B', 'Y', 'Y'], false), 6),
+		assert(d(['U', 'U', 'U', 'Y', 'W', 'B'], false), 6),
+		assert(d(['U', 'U', 'R', 'U', 'W', 'R'], true), 3),
+		assert(d(['U', 'U', 'Y', 'W', 'W', 'U'], true), 4),
+		assert(d(['U', 'U', 'Y', 'Y', 'B', 'R'], false), 4),
+		assert(d(['U', 'R', 'B', 'R', 'Y', 'R'], false), 4),
+		assert(d(['U', 'R', 'B', 'R', 'Y', 'Y'], true), 4),
+		assert(d(['U', 'R', 'R', 'B', 'U', 'R'], false), 4),
+		assert(d(['U', 'R', 'W', 'B', 'B', 'B'], false), 4),
+		assert(d(['U', 'R', 'W', 'Y', 'U', 'U'], true), 4),
+		assert(d(['U', 'R', 'Y', 'U', 'B', 'Y'], true), 4),
+		assert(d(['U', 'W', 'B', 'B', 'B', 'U'], false), 6),
+		assert(d(['U', 'W', 'B', 'R', 'W', 'Y'], true), 4),
+		assert(d(['U', 'W', 'R', 'R', 'B', 'R'], true), 3),
+		assert(d(['U', 'W', 'R', 'W', 'Y', 'B'], true), 4),
+		assert(d(['U', 'W', 'W', 'B', 'Y', 'R'], true), 4),
+		assert(d(['U', 'W', 'W', 'W', 'R', 'W'], false), 4),
+		assert(d(['U', 'W', 'W', 'W', 'R', 'Y'], true), 4),
+		assert(d(['U', 'Y', 'B', 'Y', 'R', 'W'], false), 4),
+		assert(d(['U', 'Y', 'U', 'R', 'U', 'Y'], false), 4),
+		assert(d(['U', 'Y', 'U', 'R', 'Y', 'W'], false), 4),
+		assert(d(['U', 'Y', 'R', 'W', 'U', 'U'], false), 4),
+		assert(d(['U', 'Y', 'R', 'Y', 'Y', 'U'], false), 4),
+		assert(d(['U', 'Y', 'Y', 'B', 'W', 'Y'], true), 6),
+		assert(d(['U', 'Y', 'Y', 'R', 'R', 'Y'], true), 4),
+		assert(d(['R', 'B', 'B', 'U', 'U', 'W'], false), 4),
+		assert(d(['R', 'B', 'B', 'Y', 'R', 'U'], false), 4),
+		assert(d(['R', 'B', 'R', 'Y', 'B', 'R'], true), 4),
+		assert(d(['R', 'B', 'W', 'B', 'R', 'B'], false), 4),
+		assert(d(['R', 'B', 'W', 'W', 'U', 'U'], true), 3),
+		assert(d(['R', 'B', 'Y', 'R', 'Y', 'W'], false), 4),
+		assert(d(['R', 'U', 'B', 'B', 'B', 'W'], true), 3),
+		assert(d(['R', 'U', 'B', 'B', 'R', 'W'], false), 4),
+		assert(d(['R', 'U', 'U', 'U', 'R', 'Y'], false), 4),
+		assert(d(['R', 'U', 'U', 'Y', 'U', 'W'], false), 4),
+		assert(d(['R', 'U', 'R', 'W', 'W', 'R'], false), 4),
+		assert(d(['R', 'U', 'R', 'W', 'W', 'W'], false), 4),
+		assert(d(['R', 'U', 'R', 'Y', 'R', 'U'], false), 4),
+		assert(d(['R', 'U', 'W', 'U', 'Y', 'W'], false), 4),
+		assert(d(['R', 'U', 'W', 'W', 'Y', 'Y'], true), 4),
+		assert(d(['R', 'U', 'W', 'Y', 'W', 'Y'], false), 4),
+		assert(d(['R', 'R', 'B', 'W', 'U', 'W'], false), 4),
+		assert(d(['R', 'R', 'B', 'W', 'W', 'U'], true), 3),
+		assert(d(['R', 'R', 'U', 'B', 'B', 'U'], false), 4),
+		assert(d(['R', 'R', 'U', 'W', 'R', 'B'], true), 3),
+		assert(d(['R', 'R', 'U', 'Y', 'Y', 'R'], false), 4),
+		assert(d(['R', 'R', 'W', 'U', 'W', 'W'], true), 3),
+		assert(d(['R', 'R', 'W', 'W', 'B', 'W'], false), 4),
+		assert(d(['R', 'R', 'Y', 'U', 'B', 'W'], false), 4),
+		assert(d(['R', 'R', 'Y', 'Y', 'U', 'Y'], true), 4),
+		assert(d(['R', 'W', 'B', 'Y', 'R', 'B'], true), 4),
+		assert(d(['R', 'W', 'U', 'B', 'U', 'R'], true), 3),
+		assert(d(['R', 'W', 'U', 'Y', 'U', 'Y'], false), 4),
+		assert(d(['R', 'W', 'W', 'U', 'B', 'Y'], true), 4),
+		assert(d(['R', 'W', 'Y', 'B', 'W', 'Y'], false), 4),
+		assert(d(['R', 'W', 'Y', 'U', 'B', 'Y'], false), 4),
+		assert(d(['R', 'W', 'Y', 'W', 'U', 'U'], false), 4),
+		assert(d(['R', 'Y', 'B', 'W', 'W', 'R'], false), 4),
+		assert(d(['R', 'Y', 'U', 'R', 'B', 'W'], false), 4),
+		assert(d(['R', 'Y', 'U', 'Y', 'R', 'U'], false), 4),
+		assert(d(['R', 'Y', 'R', 'R', 'U', 'R'], true), 4),
+		assert(d(['R', 'Y', 'Y', 'B', 'U', 'R'], false), 4),
+		assert(d(['R', 'Y', 'Y', 'B', 'R', 'W'], false), 4),
+		assert(d(['R', 'Y', 'Y', 'B', 'Y', 'R'], true), 4),
+		assert(d(['R', 'Y', 'Y', 'Y', 'Y', 'R'], false), 4),
+		assert(d(['W', 'B', 'B', 'B', 'R', 'U'], true), 3),
+		assert(d(['W', 'B', 'B', 'R', 'Y', 'Y'], false), 4),
+		assert(d(['W', 'B', 'B', 'Y', 'Y', 'R'], false), 4),
+		assert(d(['W', 'B', 'R', 'R', 'U', 'U'], true), 3),
+		assert(d(['W', 'B', 'R', 'W', 'R', 'Y'], false), 4),
+		assert(d(['W', 'B', 'Y', 'U', 'Y', 'Y'], true), 6),
+		assert(d(['W', 'B', 'Y', 'R', 'R', 'U'], false), 4),
+		assert(d(['W', 'U', 'U', 'B', 'R', 'W'], true), 3),
+		assert(d(['W', 'U', 'U', 'R', 'W', 'R'], false), 4),
+		assert(d(['W', 'U', 'R', 'U', 'B', 'W'], true), 3),
+		assert(d(['W', 'U', 'R', 'U', 'U', 'Y'], true), 4),
+		assert(d(['W', 'U', 'R', 'U', 'R', 'W'], true), 3),
+		assert(d(['W', 'U', 'R', 'U', 'R', 'Y'], false), 4),
+		assert(d(['W', 'U', 'R', 'R', 'U', 'R'], false), 4),
+		assert(d(['W', 'U', 'W', 'U', 'U', 'Y'], true), 4),
+		assert(d(['W', 'U', 'W', 'Y', 'B', 'R'], true), 4),
+		assert(d(['W', 'U', 'Y', 'R', 'B', 'W'], true), 4),
+		assert(d(['W', 'R', 'B', 'B', 'U', 'W'], false), 4),
+		assert(d(['W', 'R', 'B', 'B', 'U', 'Y'], true), 4),
+		assert(d(['W', 'R', 'B', 'Y', 'W', 'R'], false), 4),
+		assert(d(['W', 'R', 'U', 'B', 'W', 'B'], true), 3),
+		assert(d(['W', 'R', 'U', 'Y', 'Y', 'Y'], true), 4),
+		assert(d(['W', 'R', 'R', 'B', 'W', 'Y'], false), 4),
+		assert(d(['W', 'R', 'R', 'R', 'U', 'B'], false), 4),
+		assert(d(['W', 'R', 'R', 'W', 'W', 'Y'], true), 4),
+		assert(d(['W', 'R', 'W', 'B', 'B', 'W'], true), 3),
+		assert(d(['W', 'R', 'Y', 'U', 'B', 'B'], true), 4),
+		assert(d(['W', 'R', 'Y', 'R', 'R', 'R'], true), 4),
+		assert(d(['W', 'W', 'B', 'R', 'R', 'Y'], true), 4),
+		assert(d(['W', 'W', 'B', 'Y', 'U', 'U'], true), 4),
+		assert(d(['W', 'W', 'U', 'W', 'R', 'U'], true), 3),
+		assert(d(['W', 'W', 'U', 'W', 'Y', 'B'], true), 4),
+		assert(d(['W', 'W', 'U', 'Y', 'Y', 'B'], true), 6),
+		assert(d(['W', 'W', 'R', 'R', 'R', 'W'], true), 3),
+		assert(d(['W', 'W', 'W', 'U', 'W', 'Y'], false), 4),
+		assert(d(['W', 'Y', 'R', 'B', 'W', 'U'], false), 4),
+		assert(d(['W', 'Y', 'R', 'W', 'U', 'W'], true), 4),
+		assert(d(['W', 'Y', 'R', 'Y', 'R', 'B'], true), 4),
+		assert(d(['W', 'Y', 'W', 'U', 'U', 'B'], true), 4),
+		assert(d(['W', 'Y', 'Y', 'Y', 'R', 'B'], false), 4),
+		assert(d(['Y', 'B', 'B', 'R', 'W', 'R'], false), 4),
+		assert(d(['Y', 'B', 'R', 'R', 'U', 'B'], true), 4),
+		assert(d(['Y', 'B', 'R', 'Y', 'W', 'R'], false), 4),
+		assert(d(['Y', 'B', 'W', 'Y', 'B', 'R'], true), 4),
+		assert(d(['Y', 'B', 'Y', 'W', 'W', 'Y'], true), 6),
+		assert(d(['Y', 'U', 'B', 'U', 'B', 'U'], false), 6),
+		assert(d(['Y', 'U', 'B', 'U', 'U', 'U'], false), 6),
+		assert(d(['Y', 'U', 'B', 'U', 'Y', 'Y'], false), 6),
+		assert(d(['Y', 'U', 'B', 'W', 'R', 'Y'], true), 4),
+		assert(d(['Y', 'U', 'U', 'B', 'R', 'W'], false), 4),
+		assert(d(['Y', 'U', 'R', 'B', 'W', 'U'], false), 4),
+		assert(d(['Y', 'U', 'Y', 'R', 'Y', 'Y'], true), 4),
+		assert(d(['Y', 'R', 'B', 'B', 'U', 'R'], false), 4),
+		assert(d(['Y', 'R', 'B', 'B', 'U', 'W'], true), 4),
+		assert(d(['Y', 'R', 'B', 'B', 'R', 'B'], false), 4),
+		assert(d(['Y', 'R', 'B', 'R', 'B', 'W'], false), 4),
+		assert(d(['Y', 'R', 'U', 'U', 'U', 'R'], false), 4),
+		assert(d(['Y', 'R', 'R', 'U', 'B', 'W'], true), 4),
+		assert(d(['Y', 'R', 'R', 'W', 'B', 'W'], true), 4),
+		assert(d(['Y', 'R', 'R', 'W', 'U', 'W'], false), 4),
+		assert(d(['Y', 'R', 'W', 'B', 'Y', 'B'], true), 4),
+		assert(d(['Y', 'R', 'W', 'Y', 'Y', 'R'], false), 4),
+		assert(d(['Y', 'R', 'Y', 'B', 'Y', 'B'], false), 4),
+		assert(d(['Y', 'W', 'B', 'R', 'W', 'W'], false), 4),
+		assert(d(['Y', 'W', 'U', 'R', 'W', 'W'], false), 4),
+		assert(d(['Y', 'W', 'R', 'B', 'Y', 'U'], false), 4),
+		assert(d(['Y', 'W', 'R', 'U', 'U', 'Y'], false), 4),
+		assert(d(['Y', 'W', 'R', 'R', 'W', 'B'], true), 4),
+		assert(d(['Y', 'W', 'W', 'U', 'Y', 'W'], true), 6),
+		assert(d(['Y', 'W', 'Y', 'U', 'U', 'U'], true), 6),
+		assert(d(['Y', 'W', 'Y', 'R', 'B', 'B'], false), 4),
+		assert(d(['Y', 'Y', 'B', 'B', 'B', 'B'], true), 6),
+		assert(d(['Y', 'Y', 'B', 'B', 'W', 'R'], true), 4),
+		assert(d(['Y', 'Y', 'B', 'R', 'W', 'Y'], false), 4),
+		assert(d(['Y', 'Y', 'B', 'Y', 'Y', 'B'], false), 6),
+		assert(d(['Y', 'Y', 'R', 'B', 'Y', 'W'], false), 4),
+		assert(d(['Y', 'Y', 'R', 'Y', 'U', 'W'], true), 4)
+	];
 
-		assert(d(['B', 'B', 'U', 'U'], true), 2);
-		assert(d(['B', 'B', 'R', 'W'], true), 2);
-		assert(d(['B', 'B', 'R', 'Y'], true), 2);
-		assert(d(['B', 'U', 'B', 'R'], false), 1);
-		assert(d(['B', 'U', 'R', 'W'], false), 1);
-		assert(d(['B', 'U', 'W', 'R'], true), 1);
-		assert(d(['B', 'U', 'W', 'Y'], true), 1);
-		assert(d(['B', 'U', 'Y', 'R'], false), 1);
-		assert(d(['B', 'R', 'U', 'B'], true), 1);
-		assert(d(['B', 'R', 'R', 'B'], true), 3);
-		assert(d(['B', 'R', 'Y', 'W'], true), 2);
-		assert(d(['B', 'R', 'Y', 'Y'], true), 4);
-		assert(d(['B', 'W', 'R', 'U'], true), 1);
-		assert(d(['B', 'W', 'Y', 'B'], false), 2);
-		assert(d(['B', 'Y', 'R', 'U'], false), 1);
-		assert(d(['B', 'Y', 'R', 'R'], false), 2);
-		assert(d(['U', 'B', 'R', 'W'], false), 1);
-		assert(d(['U', 'B', 'W', 'Y'], false), 1);
-		assert(d(['U', 'B', 'Y', 'W'], true), 1);
-		assert(d(['U', 'U', 'R', 'W'], true), 2);
-		assert(d(['U', 'U', 'W', 'B'], false), 2);
-		assert(d(['U', 'U', 'W', 'Y'], false), 1);
-		assert(d(['U', 'R', 'B', 'U'], false), 2);
-		assert(d(['U', 'R', 'Y', 'U'], true), 2);
-		assert(d(['U', 'R', 'Y', 'W'], false), 1);
-		assert(d(['U', 'R', 'Y', 'Y'], false), 1);
-		assert(d(['U', 'W', 'U', 'Y'], false), 1);
-		assert(d(['U', 'W', 'W', 'W'], false), 1);
-		assert(d(['U', 'Y', 'B', 'B'], false), 1);
-		assert(d(['U', 'Y', 'B', 'W'], true), 1);
-		assert(d(['U', 'Y', 'U', 'R'], true), 2);
-		assert(d(['U', 'Y', 'R', 'W'], false), 1);
-		assert(d(['R', 'B', 'R', 'R'], false), 2);
-		assert(d(['R', 'U', 'B', 'B'], true), 1);
-		assert(d(['R', 'U', 'W', 'B'], false), 1);
-		assert(d(['R', 'R', 'B', 'R'], true), 4);
-		assert(d(['R', 'R', 'W', 'R'], true), 4);
-		assert(d(['R', 'R', 'W', 'W'], true), 2);
-		assert(d(['R', 'R', 'Y', 'Y'], false), 4);
-		assert(d(['R', 'R', 'Y', 'Y'], true), 2);
-		assert(d(['R', 'W', 'U', 'W'], true), 1);
-		assert(d(['R', 'W', 'W', 'U'], false), 1);
-		assert(d(['R', 'W', 'Y', 'W'], false), 2);
-		assert(d(['R', 'Y', 'R', 'U'], false), 1);
-		assert(d(['R', 'Y', 'Y', 'W'], false), 4);
-		assert(d(['W', 'B', 'U', 'R'], false), 1);
-		assert(d(['W', 'B', 'U', 'Y'], false), 1);
-		assert(d(['W', 'U', 'B', 'Y'], false), 1);
-		assert(d(['W', 'U', 'U', 'W'], true), 2);
-		assert(d(['W', 'U', 'R', 'W'], false), 1);
-		assert(d(['W', 'W', 'R', 'U'], false), 1);
-		assert(d(['W', 'Y', 'R', 'R'], false), 2);
-		assert(d(['W', 'Y', 'Y', 'U'], false), 1);
-		assert(d(['W', 'Y', 'Y', 'Y'], true), 1);
-		assert(d(['Y', 'B', 'B', 'R'], true), 2);
-		assert(d(['Y', 'B', 'W', 'U'], false), 1);
-		assert(d(['Y', 'B', 'W', 'W'], false), 2);
-		assert(d(['Y', 'U', 'R', 'Y'], false), 1);
-		assert(d(['Y', 'R', 'B', 'R'], false), 2);
-		assert(d(['Y', 'R', 'U', 'R'], true), 4);
-		assert(d(['Y', 'R', 'R', 'Y'], false), 4);
-		assert(d(['Y', 'R', 'W', 'U'], false), 1);
-		assert(d(['Y', 'R', 'Y', 'B'], false), 4);
-		assert(d(['Y', 'R', 'Y', 'B'], true), 4);
-		assert(d(['Y', 'W', 'U', 'B'], false), 1);
-		assert(d(['Y', 'W', 'R', 'R'], true), 4);
-		assert(d(['Y', 'W', 'W', 'R'], true), 2);
-		assert(d(['Y', 'W', 'W', 'Y'], true), 1);
-		assert(d(['Y', 'W', 'Y', 'U'], false), 1);
-		assert(d(['Y', 'Y', 'B', 'B'], true), 4);
-		assert(d(['Y', 'Y', 'R', 'R'], true), 4);
+	console.log(testCases.reduce((curr, prev) => curr && prev) ? "All tests pass" : "Tests failed");
 
-		console.log("\n\n5\n\n");
-
-		assert(d(['B', 'B', 'B', 'R', 'W'], false), 1);
-		assert(d(['B', 'B', 'R', 'R', 'W'], false), 1);
-		assert(d(['B', 'U', 'B', 'W', 'U'], true), 1);
-		assert(d(['B', 'R', 'R', 'U', 'R'], true), 1);
-		assert(d(['B', 'R', 'R', 'W', 'W'], false), 1);
-		assert(d(['B', 'R', 'Y', 'Y', 'R'], false), 1);
-		assert(d(['B', 'W', 'B', 'W', 'B'], false), 1);
-		assert(d(['B', 'W', 'U', 'B', 'U'], true), 1);
-		assert(d(['B', 'W', 'R', 'U', 'W'], true), 1);
-		assert(d(['B', 'W', 'R', 'W', 'B'], false), 1);
-		assert(d(['B', 'W', 'W', 'R', 'U'], false), 1);
-		assert(d(['B', 'W', 'W', 'R', 'U'], true), 1);
-		assert(d(['B', 'W', 'W', 'W', 'B'], false), 1);
-		assert(d(['B', 'W', 'Y', 'R', 'Y'], true), 1);
-		assert(d(['B', 'Y', 'B', 'W', 'U'], true), 1);
-		assert(d(['B', 'Y', 'U', 'W', 'B'], true), 4);
-		assert(d(['B', 'Y', 'U', 'Y', 'W'], false), 1);
-		assert(d(['U', 'B', 'R', 'W', 'Y'], false), 1);
-		assert(d(['U', 'B', 'W', 'B', 'R'], false), 1);
-		assert(d(['U', 'B', 'W', 'B', 'W'], false), 1);
-		assert(d(['U', 'B', 'W', 'Y', 'R'], false), 1);
-		assert(d(['U', 'B', 'Y', 'U', 'B'], true), 4);
-		assert(d(['U', 'B', 'Y', 'U', 'Y'], false), 1);
-		assert(d(['U', 'B', 'Y', 'R', 'W'], false), 1);
-		assert(d(['U', 'U', 'B', 'B', 'U'], true), 1);
-		assert(d(['U', 'U', 'R', 'U', 'W'], true), 2);
-		assert(d(['U', 'U', 'Y', 'U', 'R'], true), 2);
-		assert(d(['U', 'U', 'Y', 'U', 'W'], false), 2);
-		assert(d(['U', 'R', 'B', 'Y', 'Y'], false), 1);
-		assert(d(['U', 'R', 'U', 'B', 'Y'], false), 1);
-		assert(d(['U', 'R', 'W', 'W', 'B'], false), 1);
-		assert(d(['U', 'R', 'Y', 'Y', 'W'], false), 1);
-		assert(d(['U', 'W', 'B', 'U', 'B'], true), 4);
-		assert(d(['U', 'W', 'U', 'U', 'B'], true), 4);
-		assert(d(['U', 'W', 'R', 'U', 'Y'], true), 2);
-		assert(d(['U', 'W', 'R', 'R', 'R'], true), 2);
-		assert(d(['U', 'W', 'R', 'R', 'W'], false), 2);
-		assert(d(['U', 'W', 'R', 'Y', 'W'], true), 2);
-		assert(d(['U', 'W', 'W', 'Y', 'R'], true), 2);
-		assert(d(['U', 'Y', 'B', 'W', 'Y'], false), 1);
-		assert(d(['U', 'Y', 'U', 'R', 'W'], true), 2);
-		assert(d(['U', 'Y', 'R', 'R', 'U'], false), 2);
-		assert(d(['U', 'Y', 'Y', 'B', 'W'], false), 1);
-		assert(d(['U', 'Y', 'Y', 'R', 'B'], true), 4);
-		assert(d(['U', 'Y', 'Y', 'Y', 'R'], false), 1);
-		assert(d(['R', 'B', 'B', 'W', 'U'], false), 1);
-		assert(d(['R', 'B', 'U', 'B', 'Y'], false), 1);
-		assert(d(['R', 'B', 'R', 'R', 'Y'], true), 1);
-		assert(d(['R', 'B', 'W', 'W', 'R'], true), 1);
-		assert(d(['R', 'B', 'W', 'W', 'W'], false), 1);
-		assert(d(['R', 'U', 'U', 'B', 'U'], true), 1);
-		assert(d(['R', 'U', 'U', 'R', 'Y'], false), 2);
-		assert(d(['R', 'U', 'R', 'B', 'W'], false), 1);
-		assert(d(['R', 'U', 'R', 'Y', 'R'], true), 2);
-		assert(d(['R', 'R', 'B', 'U', 'U'], true), 1);
-		assert(d(['R', 'R', 'B', 'R', 'W'], true), 1);
-		assert(d(['R', 'R', 'W', 'B', 'Y'], true), 1);
-		assert(d(['R', 'R', 'Y', 'Y', 'B'], false), 1);
-		assert(d(['R', 'W', 'U', 'Y', 'W'], false), 2);
-		assert(d(['R', 'W', 'Y', 'B', 'U'], true), 1);
-		assert(d(['R', 'Y', 'B', 'U', 'U'], true), 1);
-		assert(d(['R', 'Y', 'B', 'R', 'Y'], true), 1);
-		assert(d(['R', 'Y', 'B', 'W', 'R'], true), 1);
-		assert(d(['R', 'Y', 'R', 'U', 'U'], false), 2);
-		assert(d(['R', 'Y', 'Y', 'W', 'B'], true), 4);
-		assert(d(['R', 'Y', 'Y', 'W', 'W'], true), 1);
-		assert(d(['W', 'B', 'R', 'R', 'R'], false), 1);
-		assert(d(['W', 'U', 'U', 'U', 'B'], false), 1);
-		assert(d(['W', 'U', 'U', 'R', 'B'], false), 1);
-		assert(d(['W', 'U', 'R', 'B', 'R'], false), 1);
-		assert(d(['W', 'U', 'W', 'W', 'R'], true), 2);
-		assert(d(['W', 'U', 'Y', 'R', 'W'], true), 2);
-		assert(d(['W', 'R', 'R', 'B', 'Y'], true), 1);
-		assert(d(['W', 'W', 'U', 'B', 'W'], true), 1);
-		assert(d(['W', 'W', 'U', 'W', 'R'], false), 2);
-		assert(d(['W', 'W', 'W', 'W', 'B'], false), 1);
-		assert(d(['W', 'W', 'W', 'W', 'W'], false), 2);
-		assert(d(['W', 'W', 'Y', 'W', 'U'], true), 2);
-		assert(d(['W', 'W', 'Y', 'Y', 'R'], false), 1);
-		assert(d(['W', 'Y', 'R', 'B', 'B'], false), 1);
-		assert(d(['W', 'Y', 'W', 'B', 'W'], true), 1);
-		assert(d(['W', 'Y', 'Y', 'W', 'U'], true), 2);
-		assert(d(['Y', 'B', 'U', 'R', 'B'], true), 4);
-		assert(d(['Y', 'B', 'U', 'Y', 'R'], false), 1);
-		assert(d(['Y', 'B', 'R', 'Y', 'Y'], false), 1);
-		assert(d(['Y', 'B', 'W', 'U', 'B'], true), 4);
-		assert(d(['Y', 'B', 'Y', 'R', 'R'], false), 1);
-		assert(d(['Y', 'U', 'U', 'U', 'U'], false), 2);
-		assert(d(['Y', 'U', 'R', 'W', 'B'], false), 1);
-		assert(d(['Y', 'U', 'W', 'U', 'Y'], true), 2);
-		assert(d(['Y', 'U', 'Y', 'Y', 'W'], false), 2);
-		assert(d(['Y', 'R', 'R', 'R', 'Y'], false), 2);
-		assert(d(['Y', 'R', 'R', 'Y', 'R'], false), 2);
-		assert(d(['Y', 'R', 'W', 'W', 'U'], false), 2);
-		assert(d(['Y', 'W', 'B', 'R', 'U'], true), 1);
-		assert(d(['Y', 'W', 'U', 'U', 'W'], true), 2);
-		assert(d(['Y', 'W', 'U', 'R', 'B'], false), 1);
-		assert(d(['Y', 'W', 'R', 'R', 'R'], true), 2);
-		assert(d(['Y', 'W', 'R', 'Y', 'R'], false), 2);
-		assert(d(['Y', 'W', 'W', 'B', 'U'], true), 1);
-		assert(d(['Y', 'W', 'W', 'W', 'B'], false), 1);
-		assert(d(['Y', 'Y', 'R', 'Y', 'U'], false), 1);
-
-		console.log("\n\n6\n\n");
-
-
-		assert(d(['B', 'B', 'B', 'B', 'R', 'U'], false), 4);
-		assert(d(['B', 'B', 'B', 'R', 'R', 'R'], true), 3);
-		assert(d(['B', 'B', 'R', 'U', 'W', 'Y'], false), 4);
-		assert(d(['B', 'B', 'R', 'R', 'R', 'B'], true), 3);
-		assert(d(['B', 'B', 'W', 'U', 'B', 'B'], false), 6);
-		assert(d(['B', 'B', 'W', 'U', 'B', 'U'], true), 3);
-		assert(d(['B', 'B', 'W', 'W', 'B', 'R'], true), 3);
-		assert(d(['B', 'B', 'Y', 'Y', 'W', 'R'], false), 4);
-		assert(d(['B', 'U', 'B', 'B', 'W', 'U'], false), 6);
-		assert(d(['B', 'U', 'U', 'W', 'W', 'Y'], true), 4);
-		assert(d(['B', 'U', 'U', 'Y', 'Y', 'R'], false), 4);
-		assert(d(['B', 'U', 'R', 'R', 'B', 'Y'], true), 4);
-		assert(d(['B', 'U', 'W', 'B', 'W', 'Y'], true), 4);
-		assert(d(['B', 'U', 'Y', 'R', 'R', 'R'], false), 4);
-		assert(d(['B', 'U', 'Y', 'R', 'Y', 'B'], false), 4);
-		assert(d(['B', 'R', 'U', 'B', 'U', 'B'], true), 3);
-		assert(d(['B', 'R', 'R', 'R', 'Y', 'B'], true), 4);
-		assert(d(['B', 'R', 'R', 'W', 'B', 'R'], true), 3);
-		assert(d(['B', 'R', 'Y', 'B', 'R', 'W'], false), 4);
-		assert(d(['B', 'R', 'Y', 'W', 'B', 'Y'], false), 4);
-		assert(d(['B', 'W', 'U', 'Y', 'U', 'W'], false), 4);
-		assert(d(['B', 'W', 'R', 'U', 'Y', 'Y'], true), 4);
-		assert(d(['B', 'W', 'R', 'Y', 'U', 'W'], false), 4);
-		assert(d(['B', 'W', 'W', 'Y', 'U', 'R'], false), 4);
-		assert(d(['B', 'W', 'Y', 'R', 'B', 'R'], false), 4);
-		assert(d(['B', 'W', 'Y', 'W', 'Y', 'U'], false), 6);
-		assert(d(['B', 'Y', 'B', 'R', 'B', 'R'], true), 4);
-		assert(d(['B', 'Y', 'U', 'B', 'Y', 'U'], false), 6);
-		assert(d(['B', 'Y', 'R', 'U', 'Y', 'U'], true), 4);
-		assert(d(['B', 'Y', 'R', 'R', 'W', 'W'], true), 4);
-		assert(d(['B', 'Y', 'W', 'W', 'U', 'B'], true), 4);
-		assert(d(['U', 'B', 'B', 'W', 'R', 'R'], true), 3);
-		assert(d(['U', 'B', 'W', 'B', 'W', 'U'], false), 6);
-		assert(d(['U', 'B', 'Y', 'U', 'B', 'R'], false), 4);
-		assert(d(['U', 'U', 'B', 'B', 'W', 'Y'], false), 6);
-		assert(d(['U', 'U', 'B', 'W', 'B', 'B'], true), 3);
-		assert(d(['U', 'U', 'B', 'Y', 'Y', 'Y'], false), 6);
-		assert(d(['U', 'U', 'U', 'B', 'U', 'Y'], true), 6);
-		assert(d(['U', 'U', 'U', 'B', 'Y', 'Y'], false), 6);
-		assert(d(['U', 'U', 'U', 'Y', 'W', 'B'], false), 6);
-		assert(d(['U', 'U', 'R', 'U', 'W', 'R'], true), 3);
-		assert(d(['U', 'U', 'Y', 'W', 'W', 'U'], true), 4);
-		assert(d(['U', 'U', 'Y', 'Y', 'B', 'R'], false), 4);
-		assert(d(['U', 'R', 'B', 'R', 'Y', 'R'], false), 4);
-		assert(d(['U', 'R', 'B', 'R', 'Y', 'Y'], true), 4);
-		assert(d(['U', 'R', 'R', 'B', 'U', 'R'], false), 4);
-		assert(d(['U', 'R', 'W', 'B', 'B', 'B'], false), 4);
-		assert(d(['U', 'R', 'W', 'Y', 'U', 'U'], true), 4);
-		assert(d(['U', 'R', 'Y', 'U', 'B', 'Y'], true), 4);
-		assert(d(['U', 'W', 'B', 'B', 'B', 'U'], false), 6);
-		assert(d(['U', 'W', 'B', 'R', 'W', 'Y'], true), 4);
-		assert(d(['U', 'W', 'R', 'R', 'B', 'R'], true), 3);
-		assert(d(['U', 'W', 'R', 'W', 'Y', 'B'], true), 4);
-		assert(d(['U', 'W', 'W', 'B', 'Y', 'R'], true), 4);
-		assert(d(['U', 'W', 'W', 'W', 'R', 'W'], false), 4);
-		assert(d(['U', 'W', 'W', 'W', 'R', 'Y'], true), 4);
-		assert(d(['U', 'Y', 'B', 'Y', 'R', 'W'], false), 4);
-		assert(d(['U', 'Y', 'U', 'R', 'U', 'Y'], false), 4);
-		assert(d(['U', 'Y', 'U', 'R', 'Y', 'W'], false), 4);
-		assert(d(['U', 'Y', 'R', 'W', 'U', 'U'], false), 4);
-		assert(d(['U', 'Y', 'R', 'Y', 'Y', 'U'], false), 4);
-		assert(d(['U', 'Y', 'Y', 'B', 'W', 'Y'], true), 6);
-		assert(d(['U', 'Y', 'Y', 'R', 'R', 'Y'], true), 4);
-		assert(d(['R', 'B', 'B', 'U', 'U', 'W'], false), 4);
-		assert(d(['R', 'B', 'B', 'Y', 'R', 'U'], false), 4);
-		assert(d(['R', 'B', 'R', 'Y', 'B', 'R'], true), 4);
-		assert(d(['R', 'B', 'W', 'B', 'R', 'B'], false), 4);
-		assert(d(['R', 'B', 'W', 'W', 'U', 'U'], true), 3);
-		assert(d(['R', 'B', 'Y', 'R', 'Y', 'W'], false), 4);
-		assert(d(['R', 'U', 'B', 'B', 'B', 'W'], true), 3);
-		assert(d(['R', 'U', 'B', 'B', 'R', 'W'], false), 4);
-		assert(d(['R', 'U', 'U', 'U', 'R', 'Y'], false), 4);
-		assert(d(['R', 'U', 'U', 'Y', 'U', 'W'], false), 4);
-		assert(d(['R', 'U', 'R', 'W', 'W', 'R'], false), 4);
-		assert(d(['R', 'U', 'R', 'W', 'W', 'W'], false), 4);
-		assert(d(['R', 'U', 'R', 'Y', 'R', 'U'], false), 4);
-		assert(d(['R', 'U', 'W', 'U', 'Y', 'W'], false), 4);
-		assert(d(['R', 'U', 'W', 'W', 'Y', 'Y'], true), 4);
-		assert(d(['R', 'U', 'W', 'Y', 'W', 'Y'], false), 4);
-		assert(d(['R', 'R', 'B', 'W', 'U', 'W'], false), 4);
-		assert(d(['R', 'R', 'B', 'W', 'W', 'U'], true), 3);
-		assert(d(['R', 'R', 'U', 'B', 'B', 'U'], false), 4);
-		assert(d(['R', 'R', 'U', 'W', 'R', 'B'], true), 3);
-		assert(d(['R', 'R', 'U', 'Y', 'Y', 'R'], false), 4);
-		assert(d(['R', 'R', 'W', 'U', 'W', 'W'], true), 3);
-		assert(d(['R', 'R', 'W', 'W', 'B', 'W'], false), 4);
-		assert(d(['R', 'R', 'Y', 'U', 'B', 'W'], false), 4);
-		assert(d(['R', 'R', 'Y', 'Y', 'U', 'Y'], true), 4);
-		assert(d(['R', 'W', 'B', 'Y', 'R', 'B'], true), 4);
-		assert(d(['R', 'W', 'U', 'B', 'U', 'R'], true), 3);
-		assert(d(['R', 'W', 'U', 'Y', 'U', 'Y'], false), 4);
-		assert(d(['R', 'W', 'W', 'U', 'B', 'Y'], true), 4);
-		assert(d(['R', 'W', 'Y', 'B', 'W', 'Y'], false), 4);
-		assert(d(['R', 'W', 'Y', 'U', 'B', 'Y'], false), 4);
-		assert(d(['R', 'W', 'Y', 'W', 'U', 'U'], false), 4);
-		assert(d(['R', 'Y', 'B', 'W', 'W', 'R'], false), 4);
-		assert(d(['R', 'Y', 'U', 'R', 'B', 'W'], false), 4);
-		assert(d(['R', 'Y', 'U', 'Y', 'R', 'U'], false), 4);
-		assert(d(['R', 'Y', 'R', 'R', 'U', 'R'], true), 4);
-		assert(d(['R', 'Y', 'Y', 'B', 'U', 'R'], false), 4);
-		assert(d(['R', 'Y', 'Y', 'B', 'R', 'W'], false), 4);
-		assert(d(['R', 'Y', 'Y', 'B', 'Y', 'R'], true), 4);
-		assert(d(['R', 'Y', 'Y', 'Y', 'Y', 'R'], false), 4);
-		assert(d(['W', 'B', 'B', 'B', 'R', 'U'], true), 3);
-		assert(d(['W', 'B', 'B', 'R', 'Y', 'Y'], false), 4);
-		assert(d(['W', 'B', 'B', 'Y', 'Y', 'R'], false), 4);
-		assert(d(['W', 'B', 'R', 'R', 'U', 'U'], true), 3);
-		assert(d(['W', 'B', 'R', 'W', 'R', 'Y'], false), 4);
-		assert(d(['W', 'B', 'Y', 'U', 'Y', 'Y'], true), 6);
-		assert(d(['W', 'B', 'Y', 'R', 'R', 'U'], false), 4);
-		assert(d(['W', 'U', 'U', 'B', 'R', 'W'], true), 3);
-		assert(d(['W', 'U', 'U', 'R', 'W', 'R'], false), 4);
-		assert(d(['W', 'U', 'R', 'U', 'B', 'W'], true), 3);
-		assert(d(['W', 'U', 'R', 'U', 'U', 'Y'], true), 4);
-		assert(d(['W', 'U', 'R', 'U', 'R', 'W'], true), 3);
-		assert(d(['W', 'U', 'R', 'U', 'R', 'Y'], false), 4);
-		assert(d(['W', 'U', 'R', 'R', 'U', 'R'], false), 4);
-		assert(d(['W', 'U', 'W', 'U', 'U', 'Y'], true), 4);
-		assert(d(['W', 'U', 'W', 'Y', 'B', 'R'], true), 4);
-		assert(d(['W', 'U', 'Y', 'R', 'B', 'W'], true), 4);
-		assert(d(['W', 'R', 'B', 'B', 'U', 'W'], false), 4);
-		assert(d(['W', 'R', 'B', 'B', 'U', 'Y'], true), 4);
-		assert(d(['W', 'R', 'B', 'Y', 'W', 'R'], false), 4);
-		assert(d(['W', 'R', 'U', 'B', 'W', 'B'], true), 3);
-		assert(d(['W', 'R', 'U', 'Y', 'Y', 'Y'], true), 4);
-		assert(d(['W', 'R', 'R', 'B', 'W', 'Y'], false), 4);
-		assert(d(['W', 'R', 'R', 'R', 'U', 'B'], false), 4);
-		assert(d(['W', 'R', 'R', 'W', 'W', 'Y'], true), 4);
-		assert(d(['W', 'R', 'W', 'B', 'B', 'W'], true), 3);
-		assert(d(['W', 'R', 'Y', 'U', 'B', 'B'], true), 4);
-		assert(d(['W', 'R', 'Y', 'R', 'R', 'R'], true), 4);
-		assert(d(['W', 'W', 'B', 'R', 'R', 'Y'], true), 4);
-		assert(d(['W', 'W', 'B', 'Y', 'U', 'U'], true), 4);
-		assert(d(['W', 'W', 'U', 'W', 'R', 'U'], true), 3);
-		assert(d(['W', 'W', 'U', 'W', 'Y', 'B'], true), 4);
-		assert(d(['W', 'W', 'U', 'Y', 'Y', 'B'], true), 6);
-		assert(d(['W', 'W', 'R', 'R', 'R', 'W'], true), 3);
-		assert(d(['W', 'W', 'W', 'U', 'W', 'Y'], false), 4);
-		assert(d(['W', 'Y', 'R', 'B', 'W', 'U'], false), 4);
-		assert(d(['W', 'Y', 'R', 'W', 'U', 'W'], true), 4);
-		assert(d(['W', 'Y', 'R', 'Y', 'R', 'B'], true), 4);
-		assert(d(['W', 'Y', 'W', 'U', 'U', 'B'], true), 4);
-		assert(d(['W', 'Y', 'Y', 'Y', 'R', 'B'], false), 4);
-		assert(d(['Y', 'B', 'B', 'R', 'W', 'R'], false), 4);
-		assert(d(['Y', 'B', 'R', 'R', 'U', 'B'], true), 4);
-		assert(d(['Y', 'B', 'R', 'Y', 'W', 'R'], false), 4);
-		assert(d(['Y', 'B', 'W', 'Y', 'B', 'R'], true), 4);
-		assert(d(['Y', 'B', 'Y', 'W', 'W', 'Y'], true), 6);
-		assert(d(['Y', 'U', 'B', 'U', 'B', 'U'], false), 6);
-		assert(d(['Y', 'U', 'B', 'U', 'U', 'U'], false), 6);
-		assert(d(['Y', 'U', 'B', 'U', 'Y', 'Y'], false), 6);
-		assert(d(['Y', 'U', 'B', 'W', 'R', 'Y'], true), 4);
-		assert(d(['Y', 'U', 'U', 'B', 'R', 'W'], false), 4);
-		assert(d(['Y', 'U', 'R', 'B', 'W', 'U'], false), 4);
-		assert(d(['Y', 'U', 'Y', 'R', 'Y', 'Y'], true), 4);
-		assert(d(['Y', 'R', 'B', 'B', 'U', 'R'], false), 4);
-		assert(d(['Y', 'R', 'B', 'B', 'U', 'W'], true), 4);
-		assert(d(['Y', 'R', 'B', 'B', 'R', 'B'], false), 4);
-		assert(d(['Y', 'R', 'B', 'R', 'B', 'W'], false), 4);
-		assert(d(['Y', 'R', 'U', 'U', 'U', 'R'], false), 4);
-		assert(d(['Y', 'R', 'R', 'U', 'B', 'W'], true), 4);
-		assert(d(['Y', 'R', 'R', 'W', 'B', 'W'], true), 4);
-		assert(d(['Y', 'R', 'R', 'W', 'U', 'W'], false), 4);
-		assert(d(['Y', 'R', 'W', 'B', 'Y', 'B'], true), 4);
-		assert(d(['Y', 'R', 'W', 'Y', 'Y', 'R'], false), 4);
-		assert(d(['Y', 'R', 'Y', 'B', 'Y', 'B'], false), 4);
-		assert(d(['Y', 'W', 'B', 'R', 'W', 'W'], false), 4);
-		assert(d(['Y', 'W', 'U', 'R', 'W', 'W'], false), 4);
-		assert(d(['Y', 'W', 'R', 'B', 'Y', 'U'], false), 4);
-		assert(d(['Y', 'W', 'R', 'U', 'U', 'Y'], false), 4);
-		assert(d(['Y', 'W', 'R', 'R', 'W', 'B'], true), 4);
-		assert(d(['Y', 'W', 'W', 'U', 'Y', 'W'], true), 6);
-		assert(d(['Y', 'W', 'Y', 'U', 'U', 'U'], true), 6);
-		assert(d(['Y', 'W', 'Y', 'R', 'B', 'B'], false), 4);
-		assert(d(['Y', 'Y', 'B', 'B', 'B', 'B'], true), 6);
-		assert(d(['Y', 'Y', 'B', 'B', 'W', 'R'], true), 4);
-		assert(d(['Y', 'Y', 'B', 'R', 'W', 'Y'], false), 4);
-		assert(d(['Y', 'Y', 'B', 'Y', 'Y', 'B'], false), 6);
-		assert(d(['Y', 'Y', 'R', 'B', 'Y', 'W'], false), 4);
-		assert(d(['Y', 'Y', 'R', 'Y', 'U', 'W'], true), 4);
-	};
+};
 </script>
 </head>
 <body>
